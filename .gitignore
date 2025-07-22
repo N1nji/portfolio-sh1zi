@@ -17,8 +17,6 @@ build/
 .env
 
 # Firebase config se tiver sensível
-src/firebase.js
-firebase.
 
 # TESTE
 *.mp4
