@@ -35,6 +35,7 @@ useEffect(() => {
 
 
 const handleUpload = (imageUrl) => {
+  console.log("Salvando no Firebase:", imageUrl)
   const photoRef = ref(db, 'profilePhoto')
   set(photoRef, imageUrl)
 }
