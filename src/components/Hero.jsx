@@ -72,7 +72,7 @@ const handleUpload = (imageUrl) => {
             <ProfilePictureUploader currentPhoto={profilePhoto} onUpload={handleUpload} />
           ) : (
           <img
-            src={profilePhoto || ''}
+            src={profilePhoto || '/img/esposalinda.jpg'}
             className="w-full h-full object-cover"
           />
         )}
