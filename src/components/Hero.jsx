@@ -27,13 +27,17 @@ useEffect(() => {
 
 useEffect(() => {
   const photoRef = ref(db, 'profilePhoto')
-  onValue(photoRef, (snapshot) => {
+  const unsubscribe = onValue(photoRef, (snapshot) => {
     const data = snapshot.val()
-    if (data?.url) {
+
+    if (data && data.url) {
       const version = data.updatedAt || Date.now()
       setProfilePhoto(`${data.url}?v=${version}`)
+    } else {
+      setProfilePhoto(null)
   }
 })
+  return () => unsubscribe()
 }, [])
 
 
@@ -79,7 +83,7 @@ const handleUpload = (imageUrl) => {
             <ProfilePictureUploader currentPhoto={profilePhoto} onUpload={handleUpload} />
           ) : (
           <img
-            src={profilePhoto || ''}
+            src={profilePhoto || 'https://via.placeholder.com/200x200?text=Foto'}
             className="w-full h-full object-cover"
           />
         )}
