@@ -1,6 +1,6 @@
 // PainelPastas.jsx
 import { useState, useEffect } from 'react'
-import { onAuthStateChanged } from 'firebase/auth'
+import { onAuthStateChanged, signOut } from 'firebase/auth'
 import { auth, db } from '../firebase'
 import { useNavigate } from 'react-router-dom'
 import { ref, onValue, remove, update } from 'firebase/database'
