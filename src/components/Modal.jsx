@@ -71,7 +71,7 @@ export default function Modal({ art, onClose }) {
       onClick={onClose}>
       <motion.div
         onClick={(e) => e.stopPropagation()}
-        className="bg-white rounded-2xl overflow-hidden shadow-2xl relative w-full max-w-md sm:max-w-lg"
+        className="bg-transparent rounded-2xl overflow-hidden shadow-2xl relative w-full max-w-md sm:max-w-lg"
         initial={{ opacity: 0, y:-50, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 50, scale: 0.95 }}
@@ -89,18 +89,16 @@ export default function Modal({ art, onClose }) {
         </button>
 
         {art.type === "video" ? (
-          <video src={art.source} controls autoPlay className="w-full max-h-[70vh] rounded-t-xl object-contain" />
+          <video src={art.source} controls autoPlay className="w-full max-h-[80vh] object-contain mx-auto bg-black rounded-t-xl" />
         ) : (
           <img src={art.source} alt={art.title} 
-          className="w-full h-auto max-h-[70vh] object-contain rounded-t-xl image-pixelated"
-          style={{ width: "auto", height: "auto", maxWidth: "100%", maxHeight: "80vh" }}
-          
+          className="w-full max-h-[80vh] object-contain mx-auto rounded-t-xl image-pixelated"
           />
         )}
 
         <div className="p-4 text-center">
-          <h2 className="text-2xl text-black font-extrabold font-Poppins">{art.title}</h2>
-          <p className="text-gray-500 font-extrabold mt-2 font-Poppins">{art.description}</p>
+          <h2 className="text-2xl text-white font-extrabold font-Poppins">{art.title}</h2>
+          <p className="text-white font-extrabold mt-2 font-Poppins">{art.description}</p>
 
           <div className="mt-4 flex items-center justify-center gap-2">
             <motion.button
@@ -114,7 +112,7 @@ export default function Modal({ art, onClose }) {
               <FaHeart />
             </motion.button>
 
-            <span className="text-gray-700">{likes}</span>
+            <span className="text-white">{likes}</span>
           </div>
 
           <motion.button

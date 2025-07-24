@@ -70,7 +70,7 @@ useEffect(() => {
 
       {/* 📁 Lista de Pastas */}
       {!selectedFolder ? (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto image-pixelated">
           {filteredFolders.map(folder => (
             <motion.div
               key={folder.id}
@@ -123,7 +123,7 @@ useEffect(() => {
             </div>
           ) : (
             // 🖼️ Galeria padrão
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto image-pixelated">
               {selectedFolder.artworks.map((art, index) => (
                 <motion.div
                   key={art.id}
