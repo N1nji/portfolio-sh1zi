@@ -30,7 +30,8 @@ useEffect(() => {
   onValue(photoRef, (snapshot) => {
     const data = snapshot.val()
     if (data?.url) {
-      setProfilePhoto(`${data.url}?v=${data.updateAt}`)
+      const version = data.updatedAt || Date.now()
+      setProfilePhoto(`${data.url}?v=${version}`)
   }
 })
 }, [])
@@ -40,8 +41,8 @@ const handleUpload = (imageUrl) => {
   console.log("Salvando no Firebase:", imageUrl)
   const photoRef = ref(db, 'profilePhoto')
   set(photoRef, {
-    imageUrl,
-    updateAt: Date.now()
+    url: imageUrl,
+    updatedAt: Date.now()
   })
 }
 
