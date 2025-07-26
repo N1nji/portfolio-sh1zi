@@ -10,6 +10,9 @@ import EditCoverModal from '../components/EditCoverModal'
 import ConfirmModal from '../components/ConfirmModal'
 import EditArtModal from '../components/EditModalArt'
 import { FaArrowLeft, FaSignOutAlt } from 'react-icons/fa'
+import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from "@dnd-kit/core"
+import { SortableContext, arrayMove, rectSortingStrategy } from "@dnd-kit/sortable"
+import SortableArt from '../components/SortableArt'
 
 const adminEmail = import.meta.env.VITE_ADMIN_EMAIL
 
@@ -23,6 +26,14 @@ export default function PainelPastas() {
   const [deletingFolder, setDeletingFolder] = useState(null)
   const [deletingArt, setDeletingArt] = useState(null)
   const [editingArt, setEditingArt] = useState(null)
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 5
+      }
+    })
+  )
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -44,10 +55,12 @@ export default function PainelPastas() {
           id,
           ...folder,
           artworks: folder.artworks
-            ? Object.entries(folder.artworks).map(([key, art]) => ({
-                ...art,
-                id: key
-              }))
+            ? Object.entries(folder.artworks)
+              .map(([key, art]) => ({
+              ...art,
+              id: key
+            }))
+            .sort((a, b) => (a.index ?? 0) - (b.index ?? 0))
             : []
         }))
         setFolders(folderList)
@@ -71,6 +84,33 @@ export default function PainelPastas() {
       await remove(ref(db, `folders/${deletingArt.folderId}/artworks/${deletingArt.artId}`))
       setDeletingArt(null)
     }
+  }
+
+  const handleDragEnd = (event, folderId) => {
+    const { active, over } = event
+    if (!active || !over || active.id === over.id) return
+
+    const folderIndex = folders.findIndex(f => f.id === folderId)
+    if (folderIndex === -1) return
+
+    const updatedFolders = [...folders]
+    const artworks = updatedFolders[folderIndex].artworks
+    const oldIndex = artworks.findIndex(art => art.id === active.id)
+    const newIndex = artworks.findIndex(art => art.id === over.id)
+
+    const newOrder = arrayMove(artworks, oldIndex, newIndex)
+    updatedFolders[folderIndex].artworks = newOrder
+    setFolders(updatedFolders)
+
+    const updates = {}
+    newOrder.forEach((art, index) => {
+      updates[art.id] = {
+        ...art,
+        index
+      }
+    })
+
+    update(ref(db, `folders/${folderId}/artworks`), updates)
   }
 
   const handleSaveTitle = async (folderId, updatedData) => {
@@ -99,11 +139,11 @@ export default function PainelPastas() {
             <FaArrowLeft /> Voltar pro site
           </button>
           <button
-          onClick={() => navigate('/admin')}
+            onClick={() => navigate('/admin')}
             className="flex items-center gap-2 bg-blue-700 text-midnightNavy px-3 py-2 rounded hover:bg-blue-600 transition"
-         >
-         <FaArrowLeft /> Voltar para o admin
-         </button>
+          >
+            <FaArrowLeft /> Voltar para o admin
+          </button>
           <button
             onClick={() => setConfirmLogout(true)}
             className="flex items-center gap-2 bg-red-600 hover:bg-red-700 px-3 py-2 rounded text-white"
@@ -114,18 +154,18 @@ export default function PainelPastas() {
       </aside>
 
       {/* Conteúdo principal */}
-      <main className="md:ml-64 p-8">
+      <main className="md:ml-64 p-8 image-pixelated">
         <h1 className="text-3xl font-bold mb-8 text-center text-white">Painel de Pastas</h1>
-        <div className="space-y-8">
+        <div className="space-y-8 image-pixelated">
           {folders.map(folder => (
             <motion.div
               key={folder.id}
-              className="bg-white shadow-lg rounded-xl p-6 border border-gray-200"
+              className="bg-white shadow-lg rounded-xl p-6 border border-gray-200 image-pixelated"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4 image-pixelated">
                 <div>
                   <h2 className="text-xl font-semibold text-gray-800">{folder.title}</h2>
                   <p className="text-sm text-gray-500">{folder.artworks.length} artes</p>
@@ -152,42 +192,27 @@ export default function PainelPastas() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                {folder.artworks.map(art => (
-                  <div
-                    key={art.id}
-                    className="relative group rounded overflow-hidden shadow-md"
-                  >
-                    {art.type === 'video' ? (
-                      <video
-                        src={art.source}
-                        className="w-full h-32 object-cover rounded"
-                        muted
-                        autoPlay
-                        loop
+              <DndContext
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                onDragEnd={(event) => handleDragEnd(event, folder.id)}
+              >
+                <SortableContext
+                  items={folder.artworks.map((art) => art.id)}
+                  strategy={rectSortingStrategy}
+                >
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 image-pixelated">
+                    {folder.artworks.map((art) => (
+                      <SortableArt
+                        key={art.id}
+                        art={art}
+                        onDelete={() => setDeletingArt({ folderId: folder.id, artId: art.id })}
+                        onEdit={() => setEditingArt({ folderId: folder.id, art })}
                       />
-                    ) : (
-                      <img
-                        src={art.source}
-                        alt={art.title}
-                        className="w-full h-32 object-cover rounded"
-                      />
-                    )}
-                    <button
-                      onClick={() => setDeletingArt({ folderId: folder.id, artId: art.id })}
-                      className="absolute top-2 right-2 bg-red-600 text-white p-1 rounded opacity-0 group-hover:opacity-100 transition"
-                    >
-                      ❌
-                    </button>
-                    <button
-                      onClick={() => setEditingArt({ folderId: folder.id, art })}
-                      className="absolute bottom-2 right-2 bg-yellow-400 text-white p-1 rounded opacity-0 group-hover:opacity-100 transition text-sm"
-                    >
-                      ✏️
-                    </button>
+                    ))}
                   </div>
-                ))}
-              </div>
+                </SortableContext>
+              </DndContext>
             </motion.div>
           ))}
         </div>
@@ -234,16 +259,17 @@ export default function PainelPastas() {
             onClose={() => setEditingArt(null)}
           />
         )}
+
         {confirmLogout && (
-            <ConfirmModal
+          <ConfirmModal
             title="Deseja mesmo sair?"
             message="Você está prestes a sair do painel administrativo, amorzinho. 😢"
             onCancel={() => setConfirmLogout(false)}
             onConfirm={async () => {
-            await signOut(auth)
-            navigate('/login')
-        }}
-    />
+              await signOut(auth)
+              navigate('/login')
+            }}
+          />
         )}
       </main>
     </div>

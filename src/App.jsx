@@ -35,15 +35,15 @@ function App() {
         <div>
             <GatoSplash />
             <Header />
-            <main className="pt-10"> {/* padding pra compensar o header fixo */}
+            <main className="pt-10 flex-grow"> {/* padding pra compensar o header fixo */}
             <Hero />
             <Bio />
             <Gallery />
             <BugReportButton />
-            <Footer />
             </main>
+            <Footer />
         </div>
-    }
+        }
     />
     </Routes>
     </Router>

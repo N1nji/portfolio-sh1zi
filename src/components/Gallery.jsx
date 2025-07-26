@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { ref, onValue } from 'firebase/database'
-import { db } from  '../firebase'
+import { ref, onValue, update } from 'firebase/database'
+import { db } from '../firebase'
 import Modal from './Modal'
 import { motion } from 'framer-motion'
 import { FaSignOutAlt, FaArrowLeft, FaArrowRight, FaPlus } from 'react-icons/fa'
@@ -12,33 +12,33 @@ export default function Gallery() {
   const [folders, setFolders] = useState([])
   const [categoryFilter, setCategoryFiler] = useState("Todos")
 
-  const isPixelArtFolder = selectedFolder?.id === "Animações" 
+  const isPixelArtFolder = selectedFolder?.id === "Animações"
 
-useEffect(() => {
-  const foldersRef = ref(db, 'folders')
+  useEffect(() => {
+    const foldersRef = ref(db, 'folders')
 
-  const unsubscribe = onValue(foldersRef, snapshot => {
-    const data = snapshot.val()
-    if (data) {
-      const folderList = Object.entries(data).map(([id, folder]) => ({
-        id,
-        title: folder.title,
-        cover: folder.cover,
-        category: folder.category || "Outros",
-        artworks: folder.artworks ? Object.values(folder.artworks) : []
-      })) 
-      setFolders(folderList)
-    }
-  })
+    const unsubscribe = onValue(foldersRef, snapshot => {
+      const data = snapshot.val()
+      if (data) {
+        const folderList = Object.entries(data).map(([id, folder]) => ({
+          id,
+          title: folder.title,
+          cover: folder.cover,
+          category: folder.category || "Outros",
+          artworks: folder.artworks ? Object.values(folder.artworks).sort((a, b) => a.index - b.index) : []
+        }))
+        setFolders(folderList)
+      }
+    })
 
-  return () => unsubscribe()
-}, [])
+    return () => unsubscribe()
+  }, [])
 
   const categories = ["Todos", "Mister Kitty", "Artes", "Pixel Art", "Animações"]
 
   const filteredFolders = categoryFilter === "Todos"
-  ? folders
-  : folders.filter(folder => folder.category === categoryFilter)
+    ? folders
+    : folders.filter(folder => folder.category === categoryFilter)
 
   return (
     <section
@@ -54,13 +54,13 @@ useEffect(() => {
         <div className="flex flex-wrap justify-center gap-3 mb-8">
           {categories.map(cat => (
             <button
-            key={cat}
-            onClick={() => setCategoryFiler(cat)}
-            className={`px-4 py-2 rounded-full border tex-sm font-medium transition ${
-              categoryFilter === cat
-              ? 'bg-white text-eclipseBlack'
-              : 'bg-eclipseBlack text-white hover:bg-gray-700'
-            }`}
+              key={cat}
+              onClick={() => setCategoryFiler(cat)}
+              className={`px-4 py-2 rounded-full border tex-sm font-medium transition ${
+                categoryFilter === cat
+                  ? 'bg-white text-eclipseBlack'
+                  : 'bg-eclipseBlack text-white hover:bg-gray-700'
+              }`}
             >
               {cat}
             </button>
@@ -98,7 +98,7 @@ useEffect(() => {
             onClick={() => setSelectedFolder(null)}
             className="flex gap-4 font-lobster bg-dustyBlue text-midnightNavy px-3 py-2 rounded hover:bg-midnightBlue transition"
           >
-           <FaArrowLeft /> Voltar para pastas
+            <FaArrowLeft /> Voltar para pastas
           </button>
 
           {/* 🎨 Pixel Art (estilo Itch.io) */}
@@ -161,9 +161,9 @@ useEffect(() => {
 
       {/* 🪟 Modal */}
       <AnimatePresence mode="wait">
-      {selectedArt && (
-        <Modal art={selectedArt} onClose={() => setSelectedArt(null)} />
-      )}
+        {selectedArt && (
+          <Modal art={selectedArt} onClose={() => setSelectedArt(null)} />
+        )}
       </AnimatePresence>
     </section>
   )
