@@ -32,7 +32,7 @@ function App() {
                 <Route
                 path="/"
                 element={   
-        <div className="flex flex-col min-h-screen bg-gradient-to-b from-midnightBlue via-midnightBlue to-midnightNavy">
+        <div className="flex flex-col min-h-screen bg-gradient-to-b from-midnightNavy via-midnightNavy to-midnightNavy">
             <GatoSplash />
             <Header />
             <main className="pt-10 flex-grow"> {/* padding pra compensar o header fixo */}
