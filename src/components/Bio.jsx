@@ -35,7 +35,7 @@ export default function Bio() {
           <h2 className="text-4xl text-stardustWhite font-cursive md:text-5xl font-bold mb-4">SOBRE MIM</h2>
 
           <p className="text-lg font-cursive md:text-xl mb-6">
-            Criações com muito amor, carinho e muita dedicação!
+            Co-Founder & Artista da N1S1 Games
           </p>
 
           <p className="text-base font-cursive md:text-lg leading-relaxed">
@@ -86,7 +86,7 @@ export default function Bio() {
 
         {/* 🔹 Lado direito (animação futura) */}
         <div className="flex justify-center">
-          <div className="w-72 h-72 bg-ivory/10 rounded-xl flex items-center justify-center">
+          <div className="w-72 h-72 bg-midnightBlue/10 rounded-xl flex items-center justify-center">
             {/* ⬇️ Aqui vai o asset animado futuramente */}
             <video src="/assets/EmisNew.mov" 
             autoPlay
