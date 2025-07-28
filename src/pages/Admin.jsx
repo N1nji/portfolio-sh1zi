@@ -315,7 +315,7 @@ export default function Admin() {
                 <input
                 type="file"
                 name="cover"
-                accept="image/*"
+                accept="image/*,video/*"
                 onChange={handleChange}
                 className="absolute inset-0 opacity-0 w-full h-full cursor-pointer z-10"
             />
