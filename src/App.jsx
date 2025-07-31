@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 import Hero from './components/Hero.jsx';
 import Gallery from './components/Gallery.jsx';
+import Projetos from './components/Projetos.jsx';
 import Header from './components/Header.jsx';
 import GatoSplash from './components/GatoSplash.jsx';
 import BugReportButton from './components/BugReportButton.jsx';
@@ -39,6 +40,7 @@ function App() {
             <Hero />
             <Bio />
             <Gallery />
+            <Projetos />
             <BugReportButton />
             </main>
             <Footer />
