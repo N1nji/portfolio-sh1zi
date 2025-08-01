@@ -43,6 +43,7 @@ export default function Gallery() {
   return (
     <section
       id="galeria"
+      onContextMenu={(e) => e.preventDefault()}
       className="bg-gradient-to-b from-midnightBlue via-midnightBlue to-midnightNavy py-7 text-center"
     >
       <h2 className="text-4xl font-cursive font-bold text-stardustWhite mb-10 text-center">
@@ -83,7 +84,7 @@ export default function Gallery() {
               <img
                 src={folder.cover}
                 alt={folder.title}
-                className="rounded-xl mb-4 h-40 object-cover w-full"
+                className="rounded-xl mb-4 h-40 object-cover w-full select-none pointer-events-none"
               />
               <h3 className="text-moonlightGray text-xl font-semibold">
                 {folder.title}
@@ -116,7 +117,7 @@ export default function Gallery() {
                   <img
                     src={art.source}
                     alt={art.title}
-                    className="w-full max-w-[96px] mx-auto image-pixelated"
+                    className="w-full max-w-[96px] mx-auto image-pixelated select-none pointer-events-none"
                   />
                 </motion.div>
               ))}
@@ -145,7 +146,7 @@ export default function Gallery() {
                     <img
                       src={art.source}
                       alt={art.title}
-                      className="w-full h-64 object-cover group-hover:brightness-110 transition duration-300"
+                      className="w-full h-64 object-cover group-hover:brightness-110 transition duration-300 select-none pointer-events-none"
                     />
                   )}
                   <p className="p-4 text-center font-poppins text-stardustWhite">{art.title}</p>

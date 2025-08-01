@@ -86,8 +86,7 @@ export default function Bio() {
 
         {/* 🔹 Lado direito (animação futura) */}
         <div className="flex justify-center">
-          <div className="w-72 h-72 bg-midnightBlue/10 rounded-xl flex items-center justify-center">
-            {/* ⬇️ Aqui vai o asset animado futuramente */}
+          <div className="w-72 h-72 bg-midnightBlue/10 rounded-xl flex items-center justify-center select-none pointer-events-none">
             <video src="/assets/EmisNew.mov" 
             autoPlay
             loop

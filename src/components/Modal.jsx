@@ -92,7 +92,7 @@ export default function Modal({ art, onClose }) {
           <video src={art.source} controls autoPlay className="w-full max-h-[80vh] object-contain mx-auto bg-black rounded-t-xl" />
         ) : (
           <img src={art.source} alt={art.title} 
-          className="w-full max-h-[80vh] object-contain mx-auto rounded-t-xl image-pixelated"
+          className="w-full max-h-[80vh] object-contain mx-auto rounded-t-xl image-pixelated select-none pointer-events-none"
           />
         )}
 

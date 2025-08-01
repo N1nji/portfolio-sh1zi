@@ -84,7 +84,7 @@ const handleUpload = (imageUrl) => {
           ) : (
           <img
             src={profilePhoto || 'https://via.placeholder.com/200x200?text=Foto'}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover select-none pointer-events-none"
           />
         )}
         </div>
