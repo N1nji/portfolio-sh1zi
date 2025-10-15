@@ -61,7 +61,7 @@ export default function Bio() {
             </motion.a>
 
             <motion.a
-              href="https://www.linkedin.com/in/emis-mendes-1b1a9b370/"
+              href="https://www.linkedin.com/in/emis-mendes/"
               target="_blank"
               whileHover={{ scale: 1.2 }}
             animate={highlight ? { scale: [1, 1.3, 1], color: "#60a5fa" } : {}}
