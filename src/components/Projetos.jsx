@@ -2,7 +2,7 @@ import React from 'react'
 
 const Projetos = () => {
   return (
-    <section className="w-full py-10 px-4 bg-gradient-to-b from-midnightNavy to-midnightNavy">
+    <section id="project" className="w-full py-10 px-4 bg-gradient-to-b from-midnightNavy to-midnightNavy">
       <h2 className="text-4xl font-cursive font-bold text-stardustWhite mb-10 text-center">Projetos</h2>
 
       <div className="flex justify-center flex-wrap gap-6 max-w-4xl mx-auto">

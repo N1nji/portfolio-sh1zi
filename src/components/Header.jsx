@@ -20,15 +20,21 @@ export default function Header() {
       </span>
         </a>
       <a href="#galeria" className="group relative text-buttercream hover:text-ivory transition">
-        <img src="/assets/gallery.png" alt="Home" className="w-6 h-6" />
+        <img src="/assets/gallery.png" alt="Gallery" className="w-6 h-6" />
         <span className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs text-white bg-black/80 px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">
          Galeria
       </span>
         </a>
       <a href="#contato" className="group relative text-buttercream hover:text-ivory transition">
-        <img src="/assets/contact-mail.png" alt="Home" className="w-6 h-6" />
+        <img src="/assets/contact-mail.png" alt="Contato" className="w-6 h-6" />
         <span className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs text-white bg-black/80 px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">
         Contato
+      </span>
+        </a>
+      <a href="#project" className="group relative text-buttercream hover:text-ivory transition">
+        <img src="/assets/game.png" alt="Projeto" className="w-6 h-6" />
+        <span className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs text-white bg-black/80 px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">
+        Projeto
       </span>
         </a>
     </nav>
