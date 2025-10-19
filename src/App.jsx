@@ -11,6 +11,7 @@ import Footer from './components/Footer.jsx'
 import Login from './pages/Login.jsx'
 import Admin from './pages/Admin.jsx'
 import PainelPastas from './pages/PainelPastas.jsx';
+import StarsBackground from './components/StarsBackground.jsx';
 
 import './styles/index.css'
 
@@ -35,6 +36,7 @@ function App() {
                 element={   
         <div className="flex flex-col min-h-screen bg-gradient-to-b from-midnightNavy via-midnightNavy to-midnightNavy">
             <GatoSplash />
+            <StarsBackground />
             <Header />
             <main className="pt-10 flex-grow"> {/* padding pra compensar o header fixo */}
             <Hero />
