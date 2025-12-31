@@ -90,7 +90,7 @@ export default function Gallery() {
                 <img
                   src={folder.cover}
                   alt={folder.title}
-                  className="w-full h-full object-cover select-none pointer-events-none transition-transform duration-700 group-hover:scale-110"
+                  className="w-full h-full object-cover select-none pointer-events-none transition-transform duration-700 group-hover:scale-110 image-pixelated"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-eclipseBlack/80 to-transparent opacity-60" />
               </div>
