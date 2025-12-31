@@ -43,7 +43,7 @@ export default function Gallery() {
     <section
       id="galeria"
       onContextMenu={(e) => e.preventDefault()}
-      className="min-h-screen bg-gradient-to-b from-midnightBlue via-midnightBlue to-midnightNavy py-12 px-4 sm:px-6 text-center"
+      className="min-h-screen bg-gradient-to-b from-midnightBlue via-midnightBlue to-midnightNavy py-12 px-4 sm:px-6 text-center will-change-scroll"
     >
       {/* Título com estilo aprimorado */}
       <motion.h2 
@@ -83,13 +83,15 @@ export default function Gallery() {
               onClick={() => setSelectedFolder(folder)}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.1 }}
+              transition={{ delay: idx * 0.05 }}
               whileHover={{ y: -10 }}
             >
-              <div className="relative overflow-hidden h-48">
+              <div className="relative overflow-hidden h-48 bg-black/10">
                 <img
                   src={folder.cover}
                   alt={folder.title}
+                  loading="lazy" // Só carrega quando visível
+                  decoding="async" // Não trava o scroll
                   className="w-full h-full object-cover select-none pointer-events-none transition-transform duration-700 group-hover:scale-110 image-pixelated"
                 />
               </div>
@@ -132,6 +134,8 @@ export default function Gallery() {
                   <img
                     src={art.source}
                     alt={art.title}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-contain image-pixelated select-none pointer-events-none"
                   />
                 </motion.div>
@@ -157,11 +161,15 @@ export default function Gallery() {
                         muted
                         autoPlay
                         loop
+                        playsInline // Importante para mobile não travar
+                        preload="metadata" // Não baixa o vídeo todo de vez
                       />
                     ) : (
                       <img
                         src={art.source}
                         alt={art.title}
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover transition duration-500 group-hover:scale-105 select-none pointer-events-none"
                       />
                     )}
