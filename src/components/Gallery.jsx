@@ -93,6 +93,7 @@ export default function Gallery() {
                   loading="lazy" // Só carrega quando visível
                   decoding="async" // Não trava o scroll
                   className="w-full h-full object-cover select-none pointer-events-none transition-transform duration-700 group-hover:scale-110 image-pixelated"
+                  style={{ imageRendering: 'crisp-edges' }}
                 />
               </div>
               <div className="p-6 bg-eclipseBlack">
@@ -137,6 +138,7 @@ export default function Gallery() {
                     loading="lazy"
                     decoding="async"
                     className="w-full h-full object-contain image-pixelated select-none pointer-events-none"
+                    style={{ imageRendering: 'crisp-edges' }}
                   />
                 </motion.div>
               ))}
