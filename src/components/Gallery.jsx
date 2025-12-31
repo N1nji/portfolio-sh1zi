@@ -75,7 +75,7 @@ export default function Gallery() {
 
       {/* 📁 Lista de Pastas */}
       {!selectedFolder ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto image-pixelated">
           {filteredFolders.map((folder, idx) => (
             <motion.div
               key={folder.id}
@@ -145,7 +145,7 @@ export default function Gallery() {
             </div>
           ) : (
             // 🖼️ Galeria padrão (Cards com profundidade)
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 image-pixelated">
               {selectedFolder.artworks.map((art, index) => (
                 <motion.div
                   key={art.id}
