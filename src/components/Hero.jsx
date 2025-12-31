@@ -54,12 +54,12 @@ const handleUpload = (imageUrl) => {
   return (
     <motion.section
       id="home"
-      className="bg-gradient-to-b from-astralBlue via-midnightBlue to-midnightBlue py-16 px-6"
+      className="relative bg-gradient-to-b from-astralBlue via-midnightBlue to-midnightBlue py-16 px-6"
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
     >
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10">
+      <div className="relative z-10 max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10">
         {/* Texto */}
         <div className="text-center md:text-left md:max-w-xl">
           <h1 className="text-5xl font-cursive md:text-6xl font-bold mb-4 text-buttercream">
