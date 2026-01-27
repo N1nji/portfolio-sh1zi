@@ -46,63 +46,94 @@ export default function Hero() {
     })
   }
 
+  // Variantes para animação em cascata (staggered)
+  const containerVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, staggerChildren: 0.2 }
+    }
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: { opacity: 1, x: 0 }
+  }
+
   return (
     <motion.section
       id="home"
-      // MELHORIA: Gradiente mais suave e padding maior para respiro
-      className="relative bg-gradient-to-b from-astralBlue via-midnightBlue to-midnightBlue py-24 px-8 overflow-hidden"
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
+      className="relative bg-gradient-to-b from-astralBlue via-midnightBlue to-midnightBlue py-24 px-6 overflow-hidden"
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
     >
-      {/* Elemento Decorativo: Um brilho de fundo para dar profundidade */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-buttercream/5 rounded-full blur-[120px] -z-1" />
+      {/* Elementos Decorativos de Fundo */}
+      <div className="absolute top-1/4 -left-20 w-72 h-72 bg-buttercream/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-1/4 -right-20 w-72 h-72 bg-astralBlue/20 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
         
         {/* Texto */}
-        <div className="text-center md:text-left md:max-w-2xl">
+        <div className="text-center md:text-left md:max-w-xl">
           <motion.h1 
-            className="text-6xl md:text-8xl font-cursive font-bold mb-6 text-buttercream drop-shadow-sm"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
+            variants={itemVariants}
+            className="text-5xl font-cursive md:text-7xl font-bold mb-4 text-buttercream tracking-tight"
           >
             Artista Digital
           </motion.h1>
           
-          <p className="text-xl md:text-2xl font-medium text-ivory/90 mb-8 max-w-lg leading-relaxed">
+          <motion.p 
+            variants={itemVariants}
+            className="text-lg font-cursive md:text-xl text-ivory/90 mb-8 leading-relaxed"
+          >
             Criações com muito amor, carinho e muita dedicação!
-          </p>
+          </motion.p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-            <a
+          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+            <motion.a
+              whileHover={{ scale: 1.05, backgroundColor: "#1a1a2e" }} // Simula eclipseBlack no hover
+              whileTap={{ scale: 0.95 }}
               href="mailto:saraemily3003@gmail.com?subject=Sobre%20seu%20portfólio&body=Olá,%20vi%20seu%20portfólio%20e%20gostaria%20de%20falar%20sobre..."
-              className="bg-buttercream text-midnightBlue font-bold px-8 py-4 rounded-full hover:scale-105 hover:shadow-[0_0_20px_rgba(255,251,235,0.3)] transition-all duration-300 text-center"
+              className="bg-deepNavy text-white px-10 py-4 rounded-full shadow-lg shadow-black/20 transition-colors duration-300 font-medium text-center"
             >
               Me contrate
-            </a>
-          </div>
+            </motion.a>
+          </motion.div>
         </div>
 
-        {/* Imagem de Perfil */}
-        <div className="relative">
-          {/* MELHORIA: Moldura decorativa atrás da foto */}
-          <div className="absolute -inset-4 border-2 border-buttercream/20 rounded-full animate-[spin_10s_linear_infinite]" />
+        {/* Imagem com Animação de Flutuação */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ 
+            opacity: 1, 
+            scale: 1,
+            y: [0, -15, 0] // Efeito de flutuar
+          }}
+          transition={{ 
+            opacity: { duration: 1 },
+            scale: { duration: 1 },
+            y: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+          }}
+          className="relative group"
+        >
+          {/* Brilho externo na foto */}
+          <div className="absolute -inset-1 bg-gradient-to-r from-buttercream to-astralBlue rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
           
-          <div className="relative w-56 h-56 md:w-80 md:h-80 bg-buttercream rounded-full overflow-hidden shadow-2xl border-4 border-buttercream/10">
+          <div className="relative w-52 h-52 md:w-72 md:h-72 bg-buttercream rounded-full overflow-hidden shadow-2xl border-4 border-white/10">
             {isAdmin ? (
               <ProfilePictureUploader currentPhoto={profilePhoto} onUpload={handleUpload} />
             ) : (
               <img
-                src={profilePhoto || 'https://via.placeholder.com/400x400?text=Foto'}
-                alt="Avatar"
-                className="w-full h-full object-cover select-none pointer-events-none transition-transform duration-700 hover:scale-110"
+                src={profilePhoto || 'https://via.placeholder.com/200x200?text=Foto'}
+                alt="Profile"
+                className="w-full h-full object-cover select-none pointer-events-none transition-transform duration-500 group-hover:scale-110"
               />
             )}
           </div>
-        </div>
-        
+        </motion.div>
+
       </div>
     </motion.section>
   )
