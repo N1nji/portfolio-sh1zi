@@ -64,7 +64,7 @@ export default function Hero() {
   return (
     <motion.section
       id="home"
-      className="relative bg-gradient-to-b from-astralBlue via-midnightBlue to-midnightBlue py-16 px-6 overflow-hidden"
+      className="relative bg-gradient-to-b from-astralBlue via-midnightBlue to-midnightBlue py-16 px-6"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
@@ -73,13 +73,13 @@ export default function Hero() {
       <div className="absolute top-1/4 -left-20 w-72 h-72 bg-buttercream/10 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-1/4 -right-20 w-72 h-72 bg-astralBlue/20 rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="relative z-10 max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
+      <div className="relative z-10 max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10">
         
         {/* Texto */}
         <div className="text-center md:text-left md:max-w-xl">
           <motion.h1 
             variants={itemVariants}
-            className="text-5xl font-cursive md:text-7xl font-bold mb-4 text-buttercream tracking-tight"
+            className="text-5xl font-cursive md:text-6xl font-bold mb-4 text-buttercream tracking-tight"
           >
             Artista Digital
           </motion.h1>
