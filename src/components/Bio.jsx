@@ -1,99 +1,111 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-import { FaDiscord, FaInstagram, FaLinkedin, FaXTwitter } from 'react-icons/fa6'
+import { FaDiscord, FaLinkedin, FaXTwitter } from 'react-icons/fa6'
 
 export default function Bio() {
-    const contatoRef = useRef(null)
-    const [highlight, setHighlight] = useState(false)
+  const contatoRef = useRef(null)
+  const [highlight, setHighlight] = useState(false)
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                setHighlight(entry.isIntersecting)
-            },
-            { threshold: 0.5 }
-        )
-        if (contatoRef.current) observer.observe(contatoRef.current)
-            return () => {
-        if (contatoRef.current) observer.unobserve(contatoRef.current)
-        }
-    }, [])
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setHighlight(entry.isIntersecting)
+      },
+      { threshold: 0.5 }
+    )
+    if (contatoRef.current) observer.observe(contatoRef.current)
+    return () => {
+      if (contatoRef.current) observer.unobserve(contatoRef.current)
+    }
+  }, [])
 
   return (
     <motion.section
-    id="contato"
-    ref={contatoRef}
-      className="bg-midnightBlue text-moonlightGray py-20 px-6"
+      id="contato"
+      ref={contatoRef}
+      className="bg-midnightBlue text-moonlightGray py-24 px-6 overflow-hidden"
       initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
+      whileInView={{ opacity: 1, y: 0 }} // Melhor que 'animate' para disparar quando chegar na seção
+      viewport={{ once: true }}
       transition={{ duration: 0.8 }}
     >
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
         
         {/* 🔹 Lado esquerdo (texto + redes) */}
-        <div>
-          <h2 className="text-4xl text-stardustWhite font-cursive md:text-5xl font-bold mb-4">SOBRE MIM</h2>
+        <div className="order-2 md:order-1">
+          <h2 className="text-4xl text-stardustWhite font-cursive md:text-5xl font-bold mb-6">
+            SOBRE MIM
+          </h2>
 
-          <p className="text-lg font-cursive md:text-xl mb-6">
+          <p className="text-xl font-cursive text-buttercream mb-6 italic">
             Co-Founder & Artista da N1S1 Games
           </p>
 
-          <p className="text-base font-cursive md:text-lg leading-relaxed">
-            Ilustradora e artista digital apaixonada por criar mundos imaginativos, personagens
-            carismáticos e experiências visuais envolventes. Desenha desde a infância, acumulando
-            <strong> mais de 7 anos de experiência </strong> com ilustração e expressão artística. <br /> Atua como diretora de
-            arte no jogo indie Mister Kitty, desenvolvendo desde os primeiros conceitos visuais e sprites
-            até animações e cenários completos. Une criatividade, técnica e sensibilidade em cada
-            traço, sempre buscando contar histórias visuais que conectam com o público.
-          </p>
+          <div className="text-base font-cursive md:text-lg leading-relaxed space-y-4 text-ivory/90">
+            <p>
+              Ilustradora e artista digital apaixonada por criar mundos imaginativos, personagens
+              carismáticos e experiências visuais envolventes. 
+            </p>
+            <p>
+              Desenha desde a infância, acumulando 
+              <span className="text-buttercream font-bold"> mais de 7 anos de experiência </span> 
+              com ilustração e expressão artística.
+            </p>
+            <p>
+              Atua como <span className="text-stardustWhite underline decoration-buttercream/50 underline-offset-4">diretora de arte</span> no jogo indie <span className="italic text-buttercream">Mister Kitty</span>, desenvolvendo desde os primeiros conceitos visuais e sprites até animações e cenários completos. 
+            </p>
+          </div>
 
           {/* 🔗 Redes sociais */}
-          <div className="flex gap-6 mt-6">
-            <motion.a
-              href="https://www.discord.com/users/str4nnyy"
-              target="_blank"
-              whileHover={{ scale: 1.2 }}
-              animate={highlight ? { scale: [1, 1.3, 1], color: "#60a5fa" } : {}}
-              transition={{ duration: 0.6, repeat: 1 }}
-              className="text-moonlightGray transition"
-            >
-              <FaDiscord size={28} />
-            </motion.a>
-
-            <motion.a
-              href="https://www.linkedin.com/in/emis-mendes/"
-              target="_blank"
-              whileHover={{ scale: 1.2 }}
-            animate={highlight ? { scale: [1, 1.3, 1], color: "#60a5fa" } : {}}
-            transition={{ duration: 0.6, repeat: 1 }}
-            className="text-moonlightGray transition"
-            >
-              <FaLinkedin size={28} />
-            </motion.a>
-
-            <motion.a
-              href="https://x.com/Str4nnyy"
-              target="_blank"
-              whileHover={{ scale: 1.2 }}
-            animate={highlight ? { scale: [1, 1.3, 1], color: "#d1d5db" } : {}}
-            transition={{ duration: 0.6, repeat: 1 }}
-            className="text-moonlightGray transition"
-            >
-              <FaXTwitter size={28} />
-            </motion.a>
+          <div className="flex gap-6 mt-10">
+            {[
+              { icon: <FaDiscord size={26} />, href: "https://www.discord.com/users/str4nnyy", label: "Discord" },
+              { icon: <FaLinkedin size={26} />, href: "https://www.linkedin.com/in/emis-mendes/", label: "LinkedIn" },
+              { icon: <FaXTwitter size={26} />, href: "https://x.com/Str4nnyy", label: "Twitter" }
+            ].map((social, index) => (
+              <motion.a
+                key={index}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.2, color: "#fef3c7" }} // Cor buttercrem no hover
+                animate={highlight ? { y: [0, -5, 0] } : {}}
+                transition={{ delay: index * 0.1 }}
+                className="text-ivory/60 hover:text-buttercream transition-colors duration-300"
+              >
+                {social.icon}
+              </motion.a>
+            ))}
           </div>
         </div>
 
-        {/* 🔹 Lado direito (animação futura) */}
-        <div className="flex justify-center">
-          <div className="w-72 h-72 bg-midnightBlue/10 rounded-xl flex items-center justify-center select-none pointer-events-none">
-            <video src="/assets/EmisNew.mov" 
-            autoPlay
-            loop
-            muted
-            />
-          </div>
+        {/* 🔹 Lado direito (Vídeo com Moldura Artística) */}
+        <div className="order-1 md:order-2 flex justify-center relative">
+          {/* Glow de fundo para o vídeo */}
+          <div className="absolute inset-0 bg-astralBlue/20 blur-[80px] rounded-full" />
+          
+          <motion.div 
+            whileHover={{ rotate: 2, scale: 1.02 }}
+            className="relative p-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl shadow-2xl"
+          >
+            <div className="w-64 h-64 md:w-80 md:h-80 overflow-hidden rounded-2xl border border-white/10 bg-midnightBlue/40">
+              <video 
+                src="/assets/EmisNew.mov" 
+                autoPlay 
+                loop 
+                muted 
+                playsInline
+                className="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity"
+              />
+            </div>
+            
+            {/* Detalhe decorativo - Canto da moldura */}
+            <div className="absolute -bottom-4 -right-4 bg-buttercream text-midnightBlue px-4 py-1 rounded-full text-xs font-bold shadow-lg">
+              HELLO!
+            </div>
+          </motion.div>
         </div>
+        
       </div>
     </motion.section>
   )
