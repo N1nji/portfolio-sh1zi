@@ -53,7 +53,7 @@ export default function Hero() {
     <motion.section
       id="home"
       // py-20 para garantir o respiro da imagem 1, sem exagerar como na 2
-      className="relative bg-gradient-to-b from-astralBlue via-midnightBlue to-midnightBlue py-12 px-6 min-h-[400px] flex items-center"
+      className="relative bg-gradient-to-b from-astralBlue via-midnightBlue to-midnightBlue py-13 px-6 min-h-[400px] flex items-center"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
