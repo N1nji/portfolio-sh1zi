@@ -1,44 +1,51 @@
 import { motion } from 'framer-motion'
 
 export default function Header() {
-    return  (
-  <motion.header
-  className="bg-gradient-to-r from-midnightBlue to-astralBlue text-moonlightGray fixed top-0 w-full z-50 shadow-md"
-  initial={{ y: -100, opacity: 0 }}
-  animate={{ y: 0, opacity: 1 }}
-  transition={{ duration: 0.6 }}
->
-  <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-    <h1 className="text-xl font-lobster font-bold tracking-wide text-buttercream">
-      Emis
-    </h1>
-    <nav className="flex flex-row gap-6 text-sm md:text-base items-center">
-      <a href="#home" className="group relative text-buttercream hover:text-ivory transition">
-        <img src="/assets/home.png" alt="Home" className="w-6 h-6" />
-        <span className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs text-white bg-black/80 px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">
-        Home
-      </span>
-        </a>
-      <a href="#galeria" className="group relative text-buttercream hover:text-ivory transition">
-        <img src="/assets/gallery.png" alt="Gallery" className="w-6 h-6" />
-        <span className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs text-white bg-black/80 px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">
-         Galeria
-      </span>
-        </a>
-      <a href="#contato" className="group relative text-buttercream hover:text-ivory transition">
-        <img src="/assets/contact-mail.png" alt="Contato" className="w-6 h-6" />
-        <span className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs text-white bg-black/80 px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">
-        Contato
-      </span>
-        </a>
-      <a href="#project" className="group relative text-buttercream hover:text-ivory transition">
-        <img src="/assets/game.png" alt="Projeto" className="w-6 h-6" />
-        <span className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs text-white bg-black/80 px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">
-        Projeto
-      </span>
-        </a>
-    </nav>
-  </div>
-</motion.header>
-    )
+  return (
+    <motion.header
+      className="fixed top-4 left-1/2 transform -translate-x-1/2 w-[95%] max-w-7xl z-50 rounded-2xl border border-white/10 bg-midnightBlue/60 backdrop-blur-md shadow-2xl"
+      initial={{ y: -100, x: "-50%", opacity: 0 }}
+      animate={{ y: 0, x: "-50%", opacity: 1 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+    >
+      <div className="flex items-center justify-between px-6 py-3">
+        {/* Logo com brilho */}
+        <h1 className="text-2xl font-lobster font-bold tracking-wide text-buttercream drop-shadow-[0_0_8px_rgba(254,243,199,0.3)]">
+          Emis
+        </h1>
+
+        <nav className="flex flex-row gap-8 items-center">
+          {[
+            { id: "#home", src: "/assets/home.png", label: "Home" },
+            { id: "#galeria", src: "/assets/gallery.png", label: "Galeria" },
+            { id: "#contato", src: "/assets/contact-mail.png", label: "Sobre" },
+            { id: "#project", src: "/assets/game.png", label: "Projetos" },
+          ].map((item, index) => (
+            <a
+              key={index}
+              href={item.id}
+              className="group relative flex items-center justify-center transition-all"
+            >
+              {/* Ícone com animação de escala e brilho */}
+              <motion.img
+                src={item.src}
+                alt={item.label}
+                className="w-6 h-6 object-contain filter brightness-90 group-hover:brightness-110"
+                whileHover={{ y: -4, scale: 1.2 }}
+                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              />
+
+              {/* Tooltip refinado */}
+              <span className="absolute -bottom-10 scale-0 group-hover:scale-100 transition-all duration-200 text-[10px] font-bold tracking-widest uppercase text-midnightBlue bg-buttercream px-3 py-1 rounded-full shadow-lg">
+                {item.label}
+              </span>
+
+              {/* Indicador de Hover (pontinho embaixo) */}
+              <span className="absolute -bottom-2 w-0 h-1 bg-buttercream rounded-full transition-all duration-300 group-hover:w-1" />
+            </a>
+          ))}
+        </nav>
+      </div>
+    </motion.header>
+  )
 }
