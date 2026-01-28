@@ -12,6 +12,9 @@ export default function ProfilePictureUploader({ currentPhoto, onUpload }) {
     const file = event.target.files[0]
     if (!file) return
 
+    // Preview imediato local (UX Improvement)
+    const localUrl = URL.createObjectURL(file)
+    setPreview(localUrl)
     setLoading(true)
 
     const formData = new FormData()
@@ -31,6 +34,7 @@ export default function ProfilePictureUploader({ currentPhoto, onUpload }) {
 
     } catch (error) {
       console.error('Erro no upload:', error)
+      setPreview(currentPhoto) // Volta a foto anterior em caso de erro
       alert('Erro ao enviar a imagem. Tente novamente.')
     } finally {
       setLoading(false)
@@ -39,33 +43,43 @@ export default function ProfilePictureUploader({ currentPhoto, onUpload }) {
 
   return (
     <div 
-        className="relative w-full h-full group cursor-pointer"
-         onClick={() => {
-      // Em mobile, permitir abrir seleção de arquivo ao tocar na foto
-      document.getElementById('file-input-profile').click()
-    }}
+      className="relative w-full h-full group cursor-pointer overflow-hidden rounded-full border-2 border-buttercream/20 shadow-xl"
+      onClick={() => document.getElementById('file-input-profile').click()}
     >
+      {/* Imagem de Perfil */}
       <img
-        src={preview || '/img/default-profile.png'}
-        className="w-full h-full object-cover rounded-full border shadow"
+        src={preview || 'https://via.placeholder.com/200x200?text=Foto'}
+        className={`w-full h-full object-cover transition-all duration-500 ${loading ? 'blur-sm scale-95' : 'group-hover:scale-110'}`}
+        alt="Profile Preview"
       />
-      <label className="absolute bottom-2 right-20 bg-astralBlue text-white rounded-full p-2 cursor-pointer hover:bg-midnightBlue transition opacity-0 group-hover:opacity-100">
-        ✏️
-        <input
-          id="file-input-profile"
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={handleFileChange}
-          disabled={loading}
-        />
-      </label>
-      
-      {loading && (
-        <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center rounded-full">
-          <span className="text-white text-sm">Enviando...</span>
-        </div>
-      )}
+
+      {/* Overlay de Hover (Aparece ao passar o mouse ou se estiver carregando) */}
+      <div className={`absolute inset-0 flex flex-col items-center justify-center bg-black/50 transition-opacity duration-300 ${loading ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
+        
+        {loading ? (
+          // Spinner de Carregamento Moderno
+          <div className="flex flex-col items-center gap-2">
+            <div className="w-8 h-8 border-4 border-buttercream border-t-transparent rounded-full animate-spin"></div>
+            <span className="text-white text-[10px] font-bold uppercase tracking-widest">Subindo...</span>
+          </div>
+        ) : (
+          // Ícone de Edição
+          <div className="flex flex-col items-center gap-1">
+            <span className="text-2xl">📸</span>
+            <span className="text-white text-[10px] font-bold uppercase tracking-widest">Trocar Foto</span>
+          </div>
+        )}
+      </div>
+
+      {/* Input Escondido */}
+      <input
+        id="file-input-profile"
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={handleFileChange}
+        disabled={loading}
+      />
     </div>
   )
 }

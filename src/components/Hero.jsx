@@ -64,7 +64,7 @@ export default function Hero() {
   return (
     <motion.section
       id="home"
-      className="relative bg-gradient-to-b from-astralBlue via-midnightBlue to-midnightBlue py-24 px-6 overflow-hidden"
+      className="relative bg-gradient-to-b from-astralBlue via-midnightBlue to-midnightBlue py-16 px-6 overflow-hidden"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
