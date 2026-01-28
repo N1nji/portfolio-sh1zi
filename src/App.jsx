@@ -38,7 +38,7 @@ function App() {
             <GatoSplash />
             <StarsBackground />
             <Header />
-            <main className="pt-10 flex-grow"> {/* padding pra compensar o header fixo */}
+            <main className="pt-24 flex-grow overflow-x-hidden"> {/* padding pra compensar o header fixo */}
             <Hero />
             <Bio />
             <Gallery />
