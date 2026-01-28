@@ -8,7 +8,7 @@ export default function Header() {
       animate={{ y: 0, x: "-50%", opacity: 1 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
     >
-      <div className="flex items-center justify-between px-6 py-4">
+      <div className="flex items-center justify-between px-6 py-2">
         {/* Logo com brilho */}
         <h1 className="text-2xl font-lobster font-bold tracking-wide text-buttercream drop-shadow-[0_0_8px_rgba(254,243,199,0.3)]">
           Emis
