@@ -68,10 +68,14 @@ export default function Bio() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{ scale: 1.2, color: "#fef3c7" }} // Cor buttercrem no hover
+                whileHover={{ 
+                  scale: 1.2, 
+                  color: social.color,
+                  filter: `drop-shadow(0 0 8px ${social.color})`
+                }}
                 animate={highlight ? { y: [0, -5, 0] } : {}}
-                transition={{ delay: index * 0.1 }}
-                className="text-ivory/60 hover:text-buttercream transition-colors duration-300"
+                transition={{ type: "spring", stiffness: 300 }}
+                className="text-ivory/70 transition-all duration-300"
               >
                 {social.icon}
               </motion.a>
